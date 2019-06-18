@@ -1,0 +1,17 @@
+{
+  "name": "lazy-validator",
+  "version": "1.0.0",
+  "description": "A json schema validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "json-schema",
+    "schema",
+    "object-validator",
+    "validator"
+  ],
+  "author": "Wisdom Ogwu (@iammadab)",
+  "license": "ISC"
+}
