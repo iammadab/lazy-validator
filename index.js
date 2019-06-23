@@ -21,6 +21,8 @@ function createValidator(validationRule){
 }
 
 function createValidatorSync(validationRule){
+	if(removeSpaces(validationRule) == "") return dumbValidator
+
 	return function (objectToValidate){
 		let rules = grabRules(removeSpaces(validationRule)), properties = grabProperties(rules), types = grabTypes(rules), errors = []
 
@@ -54,6 +56,10 @@ function verifyAllType(properties, types, values){
 		errors = errors.concat(error)
 	}
 	return errors
+}
+
+function dumbValidator(objectToValidate){
+	return { error: false, errors: [] }
 }
 
 
