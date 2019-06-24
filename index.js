@@ -115,10 +115,11 @@ function verifyType(typename, propertyName, value){
 	if(!typeFn)
 		errors.push({ error: "Invalid Type Function", message: `(${typename}) is not a valid type`})
 
-	else if(typename == "Number")
-		if(typeof +value != typeof typeFn())
+	else if(typename == "Number"){
+		if(isNaN(+value) || value == true || value == false)
 			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
-		
+	}
+
 	else if(typeof typeFn() != typeof value)
 		errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 
