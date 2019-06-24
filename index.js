@@ -111,8 +111,14 @@ function grabTypes(rules){
 function verifyType(typename, propertyName, value){
 	let errors = []
 	let typeFn = typeMap[typename]
+
 	if(!typeFn)
 		errors.push({ error: "Invalid Type Function", message: `(${typename}) is not a valid type`})
+
+	else if(typename == "Number")
+		if(typeof +value != typeof typeFn())
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+		
 	else if(typeof typeFn() != typeof value)
 		errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 
