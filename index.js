@@ -12,10 +12,7 @@ function createValidator(validationRule){
 	return function (objectToValidate){
 		return new Promise(function(resolve, reject){
 			let result = syncValidator(objectToValidate)
-			if(result.error)
-				reject(result)
-			else
-				resolve(result)
+			resolve(result)
 		})
 	}
 }
@@ -89,7 +86,7 @@ module.exports = {
 //Helpers
 
 function removeSpaces(string){
-	return string.split(" ").filter(value => value).join("")
+	return string.replace(/\s/g, "")
 }
 
 function grabRules(ruleString){
@@ -117,6 +114,12 @@ function verifyType(typename, propertyName, value){
 
 	else if(typename == "Number"){
 		if(isNaN(+value) || typeof value == "boolean")
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+	}
+
+	else if(typename == "Boolean"){
+		let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
+		if(!acceptable.includes(lowCaseValue))
 			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 	}
 
