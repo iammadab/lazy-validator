@@ -113,10 +113,12 @@ function verifyType(typename, propertyName, value){
 		errors.push({ error: "Invalid Type Function", message: `(${typename}) is not a valid type`})
 
 	else if(typename == "Number")
-		isNumber(value)
+		if(!isNumber(value))
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 
 	else if(typename == "Boolean")
-		isBoolean(value)
+		if(!isBoolean(value))
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 
 	else if(typeof typeFn() != typeof value)
 		errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
@@ -127,13 +129,15 @@ function verifyType(typename, propertyName, value){
 	// Small helpers
 	function isNumber(value){
 		if(isNaN(+value) || typeof value == "boolean")
-			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+			return false
+		return true
 	}
 
 	function isBoolean(value){
 		let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
 		if(!acceptable.includes(lowCaseValue))
-			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+			return false
+		return true
 	}
 }
 
