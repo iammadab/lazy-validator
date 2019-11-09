@@ -112,21 +112,29 @@ function verifyType(typename, propertyName, value){
 	if(!typeFn)
 		errors.push({ error: "Invalid Type Function", message: `(${typename}) is not a valid type`})
 
-	else if(typename == "Number"){
-		if(isNaN(+value) || typeof value == "boolean")
-			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
-	}
+	else if(typename == "Number")
+		isNumber(value)
 
-	else if(typename == "Boolean"){
-		let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
-		if(!acceptable.includes(lowCaseValue))
-			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
-	}
+	else if(typename == "Boolean")
+		isBoolean(value)
 
 	else if(typeof typeFn() != typeof value)
 		errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
 
 	return errors
+
+
+	// Small helpers
+	function isNumber(value){
+		if(isNaN(+value) || typeof value == "boolean")
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+	}
+
+	function isBoolean(value){
+		let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
+		if(!acceptable.includes(lowCaseValue))
+			errors.push({ error: "Type Error", message: `Expected (${typename}) for (${propertyName}) instead got (${typeof value})`})
+	}
 }
 
 function verifyProperty(propertyName, obj){
