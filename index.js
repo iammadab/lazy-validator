@@ -60,11 +60,11 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 
 
 
-let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
-myVal.add("lowercase", function(value){
-	return { error: false, data: value.toLowerCase() }
-})
-myVal.add("addSome", function(value){
-	return { error: false, data: value += "blahBLAH" }
-})
-console.log(myVal.parse({username: "Wisdom", password: "NicEstuff"}))
+// let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
+// myVal.add("lowercase", function(value){
+// 	return { error: false, data: value.toLowerCase() }
+// })
+// myVal.add("addSome", function(value){
+// 	return { error: false, data: value += "blahBLAH" }
+// })
+// console.log(myVal.parse({username: "Wisdom", password: "NicEstuff"}))
