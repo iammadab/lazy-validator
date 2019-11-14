@@ -4,29 +4,22 @@ const createResolver = require("./baseFunctions")
 function createValidator(validationString){
 
 	let instructionObj = parseInput(validationString)
-	console.log(instructionObj)
-
 	let resolver = createResolver()
 
 	function parse(objToValidate){
-		let instructionProps = Object.keys(instructionObj)
-		console.log(instructionProps)
-		let parserResult = {}
-		instructionProps.forEach(instructionProp => {
-			let exists = resolver.resolve("hasproperty")(objToValidate, instructionProp)
-			if(exists.error)
-				return parserResult[instructionProp] = exists
+		let instructionProps = Object.keys(instructionObj), parserResult = {}
 
-			let transforms = instructionObj[instructionProp], currentValue = objToValidate[instructionProp]	
-			for(let i = 0; i < transforms.length; i++){
-				let transformationResult = transforms[i](instructionProp, currentValue)
-				if(transformationResult.error)
-					return parserResult[instructionProp] = transformationResult
-				currentValue = transformationResult.data
-			}
-			
+		instructionProps.forEach(currentProperty => {
+			let exists = resolver.resolve("hasproperty")(objToValidate, currentProperty)
+			if(exists.error)
+				return parserResult[currentProperty] = exists
+
+			let transforms = instructionObj[currentProperty], currentValue = objToValidate[currentProperty]	
+
+			applyTransformations(transforms, currentProperty, currentValue, resolver, parserResult)
 		})
-		console.log(parserResult)
+		
+		return parserResult
 	}
 
 	return {
@@ -36,5 +29,28 @@ function createValidator(validationString){
 
 }
 
-let myVal = createValidator("username.strings, password.string")
-myVal.parse({username: 1, password: 2})
+let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
+myVal.add("lowercase", function(name, value){
+	return { error: false, data: value.toLowerCase() }
+})
+myVal.add("addSome", function(name, value){
+	return { error: false, data: value += "blahBLAH" }
+})
+console.log(myVal.parse({username: "Wisdom", password: "NicEstuff"}))
+
+function applyTransformations(transforms, currentProperty, currentValue, resolver, resultObj){
+	for(let i = 0; i < transforms.length; i++){
+		let transform = transforms[i], transformFunction = resolver.resolve(transform)
+
+		if(transformFunction.error)
+			return resultObj[currentProperty] = transformFunction
+
+		let transformationResult = transformFunction(currentProperty, currentValue)
+
+		if(transformationResult.error)
+			return resultObj[currentProperty] = transformationResult
+
+		currentValue = transformationResult.data
+	}
+	resultObj[currentProperty] = currentValue
+}
