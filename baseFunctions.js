@@ -50,20 +50,20 @@ function hasProperty(obj, name){
 }
 
 function typeCheck(fn){
-	return function checker(name, value){
+	return function checker(value, name){
 		if(typeof fn() == typeof value)
 			return { error: false, data: value }
 		return { error: true, error_string: `Expected (${typeof fn()}) for (${name}) instead got (${typeof value})` }
 	}
 }
 
-function isNumber(name, value){
+function isNumber(value, name){
 	if(isNaN(+value) || typeof value == "boolean")
 			return { error: true, error_string: `Expected (number) for (${name}) instead got (${typeof value})` }
 		return { error: false, data: +value }
 }
 
-function isBoolean(name, value){
+function isBoolean(value, name){
 	let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
 	if(!acceptable.includes(lowCaseValue))
 		return { error: true, error_string: `Expected (boolean) for (${name}) instead got (${typeof value})` }
