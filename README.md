@@ -22,7 +22,7 @@ Sometimes, you don't just want to validate an object, but you want to transform 
 
 #### Get your object(s)
 ```javascript
-    const validLoginObject = { username: "hello", passsword: "nice" }
+    const validLoginObject = { username: "UsErOne", passsword: "nice" }
     const invalidLoginObject = { username: 1, password: {} }
 ```
 
@@ -36,7 +36,7 @@ Sometimes, you don't just want to validate an object, but you want to transform 
     { 
         error: false, 
         data: { 
-            username: 'hello', 
+            username: 'UsErOne', 
             password: 'nice' 
         } 
     }
@@ -55,3 +55,17 @@ Sometimes, you don't just want to validate an object, but you want to transform 
 
 
 ### Type Validation + Transformation
+#### Now if you wanted to transform the username to lowercase after you have validated that it is a string.
+
+### Create your validator
+```javascript
+    const userLoginValidator = createValidator("username.string.lowercase, password.string")
+```
+
+### Define what your transformation does
+#### Note: In the future, predefined transformation for common usecases will be available
+
+``` javascript
+    userLoginValidator.add("lowercase", value => value.toLowerCase())
+```
+
