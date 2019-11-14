@@ -9,7 +9,8 @@ function createResolver(){
 		"boolean": isBoolean,
 		"array": typeCheck(Array),
 		"object": typeCheck(Object),
-		"function": typeCheck(Function)
+		"function": typeCheck(Function),
+		"hasProperty": hasProperty
 	}	
 
 	function resolve(functionName){
@@ -42,6 +43,12 @@ function createResolver(){
 
 
 // Helpers
+function hasProperty(obj, name){
+	if(obj.hasOwnProperty(name))
+		return { error: false, data: name }
+	return { error: true, error_string: `Expected property called (${name})` }
+}
+
 function typeCheck(fn){
 	return function checker(name, value){
 		if(typeof fn() == typeof value)
@@ -53,7 +60,7 @@ function typeCheck(fn){
 function isNumber(name, value){
 	if(isNaN(+value) || typeof value == "boolean")
 			return { error: true, error_string: `Expected (number) for (${name}) instead got (${typeof value})` }
-		return { error: false, data: value }
+		return { error: false, data: +value }
 }
 
 function isBoolean(name, value){
