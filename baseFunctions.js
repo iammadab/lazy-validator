@@ -19,7 +19,7 @@ function createResolver(){
 			return baseBubble[functionName]
 		if(extensionBubble[functionName])
 			return extensionBubble[functionName]
-		return null
+		return { error: true, error_string: `Invalid type (${functionName})`}
 	}
 
 	function add(functionName, fn){
