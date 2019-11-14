@@ -1,13 +1,11 @@
-module.exports = {
-	createResolver
-}
+module.exports = createResolver
 
 function createResolver(){
 	let baseBubble = {}, extensionBubble = {}
 
 	baseBubble = {
 		"string": typeCheck(String),
-		"number": iSNumber,
+		"number": isNumber,
 		"boolean": isBoolean,
 		"array": typeCheck(Array),
 		"object": typeCheck(Object),
@@ -24,7 +22,7 @@ function createResolver(){
 	}
 
 	function add(functionName, fn){
-		extensionBubble[functionName.toLowerCase] = fn
+		extensionBubble[functionName.toLowerCase()] = fn
 	}
 
 	return {
