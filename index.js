@@ -27,7 +27,7 @@ function createParser(instructionObj, resolver){
 			applyTransformations(transforms, currentProperty, currentValue, resolver, parserResult)
 		})
 		
-		return parserResult
+		return formatResult(parserResult)
 	}
 }
 
@@ -48,6 +48,20 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 	resultObj[currentProperty] = currentValue
 }
 
+function formatResult(parseResult){
+	let errors = [], props = Object.keys(parseResult)
+	props.forEach(prop => {
+		if(parseResult[prop].error)
+			errors.push(parseResult[prop].error_string)
+	})
+	if(errors.length > 0)
+		return { error: true, errors }
+	else
+		return { error: false, data: parseResult }
+}
+
+
+module.exports = { createValidator }
 
 
 
@@ -56,10 +70,15 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 
 
 
+const userLoginValidator = createValidator("username.string, password.string")
+const validLoginObject = { username: "hello", password: "nice" }
+const invalidLoginObject = { username: 1, password: 1 }
 
+const validationResult1 = userLoginValidator.parse(validLoginObject)
+const validationResult2 = userLoginValidator.parse(invalidLoginObject)
 
-
-
+console.log(validationResult1)
+console.log(validationResult2)
 // let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
 // myVal.add("lowercase", function(value){
 // 	return { error: false, data: value.toLowerCase() }
