@@ -7,6 +7,10 @@ const typeMap = {
 	"Function": Function
 }
 
+const functionMap = {
+
+}
+
 function createValidator(validationRule){
 	let syncValidator = createValidatorSync(validationRule)
 	return function (objectToValidate){
