@@ -1,36 +1,120 @@
-#Lazy Validator
-Validate your javascript object, and transform their values.
-Sometimes, you don't just want to validate an object, but you want to transform the object values in some way e.g to uppercase, lower case, remove all r's e.t.c before working with it.
+# lazy-validator
+Javascript Object Validator
 
 ## Installation
-``` javascript
-    npm install lazy-validator
+
+```javascript
+    npm install lazy-validator --save
 ```
+
 
 ## Usage
 
-### Import
-``` javascript
-    const { createValidator } = require("lazy-validator")
+### Import 
+```
+  const { createValidator } = require("lazy-validator")
 ```
 
-### Type Validation
-#### Create your validator
+### Create your validator
+
 ```javascript
-    const userLoginValidator = createValidator("username.string, password.string")
+  const userLoginValidator = createValidator("username.string, password.string")
 ```
 
-#### Get your object(s)
+### Use validator
+
 ```javascript
-    const validLoginObject = { username: "hello", passsword: "nice" }
-    const invalidLoginObject = { username: 1, password: "nice" }
+  const loginObject = { username: "alice", password: "bob" }
+  
+  userLoginValidator(loginObject)
+    .then(handleSuccess)
+    .catch(handleError)
 ```
 
-#### Apply the validator
+If there is an error with the validation, the validator throws an error with an object describing the error
+
 ```javascript
-    const validationResult1 = userLoginValidator.parse(validLoginObject)
-    const validationResult2 = userLoginValidator.parse(invalidLoginObject)
-
-    console.log(validationResult1)
-    
+  const { createValidator } = require("lazy-validator")
+  
+  const userLoginValidator = createValidator("username.string, password.string")
+  
+  //Provoke validation error
+  userLoginValidator({ username: 1 })
+    .catch(console.log)
+ 
+  //Error format
+  {
+    error: true,
+    errors:[ 
+      { 
+        error: 'Property not found',
+        message: 'Expected property called (password)' 
+      },
+      { 
+        error: 'Type Error',
+        message: 'Expected (String) for (username) instead got (number)' 
+      },
+      { 
+        error: 'Type Error',
+        message: 'Expected (String) for (password) instead got (undefined)' 
+      } 
+    ]
+   }
 ```
+
+## Synchronous Validation
+
+```javascript
+
+  const { createValidatorSync } = require("lazy-validator")
+  
+  const userLoginValidator = createValidatorSync("username.string, password.string")
+  
+  const validationResult = userLoginValidator({ username: "alice", password: "bob" })
+  
+  console.log(validationResult) // { error: false, errors: [] }
+
+```
+
+## Types
+
+### String
+
+```
+  "field.string"
+```
+
+### Number
+
+```
+  "field.number"
+```
+
+### Boolean
+
+```
+  "field.boolean"
+```
+
+### Array
+
+```
+  "field.array"
+```
+
+### Object
+
+```
+  "field.object"
+```
+
+### Function
+
+```
+  "field.function"
+```
+
+
+
+### Author
+[Wisdom Ogwu (iammadab)](https://twitter.com/iammadab)
