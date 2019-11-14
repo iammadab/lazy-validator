@@ -43,20 +43,22 @@ function createResolver(){
 
 // Helpers
 function typeCheck(fn){
-	return function checker(value){
-		return typeof fn() == typeof value
+	return function checker(name, value){
+		if(typeof fn() == typeof value)
+			return { error: false, data: value }
+		return { error: true, error_string: `Expected (${typeof fn()}) for (${name}) instead got (${typeof value})` }
 	}
 }
 
-function isNumber(value){
+function isNumber(name, value){
 	if(isNaN(+value) || typeof value == "boolean")
-			return false
-		return true
+			return { error: true, error_string: `Expected (number) for (${name}) instead got (${typeof value})` }
+		return { error: false, data: value }
 }
 
-function isBoolean(value){
+function isBoolean(name, value){
 	let lowCaseValue = ("" + value).toLowerCase(), acceptable = ["true", "false"]
 	if(!acceptable.includes(lowCaseValue))
-		return false
-	return true
+		return { error: true, error_string: `Expected (boolean) for (${name}) instead got (${typeof value})` }
+	return { error: false, data: value }
 }
