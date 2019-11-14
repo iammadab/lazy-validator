@@ -9,6 +9,14 @@ function parseInput(programInput){
 	return finalObj
 }
 
+
+module.exports = {
+	parseInput
+}
+
+
+
+
 // Helpers
 function removeSpaces(string){
 	return string.replace(/\s/g, "")
