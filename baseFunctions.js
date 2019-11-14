@@ -10,7 +10,7 @@ function createResolver(){
 		"array": typeCheck(Array),
 		"object": typeCheck(Object),
 		"function": typeCheck(Function),
-		"hasProperty": hasProperty
+		"hasproperty": hasProperty
 	}	
 
 	function resolve(functionName){
