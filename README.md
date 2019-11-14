@@ -23,7 +23,7 @@ Sometimes, you don't just want to validate an object, but you want to transform 
 #### Get your object(s)
 ```javascript
     const validLoginObject = { username: "hello", passsword: "nice" }
-    const invalidLoginObject = { username: 1, password: "nice" }
+    const invalidLoginObject = { username: 1, password: {} }
 ```
 
 #### Apply the validator
@@ -32,5 +32,26 @@ Sometimes, you don't just want to validate an object, but you want to transform 
     const validationResult2 = userLoginValidator.parse(invalidLoginObject)
 
     console.log(validationResult1)
+    // Result
+    { 
+        error: false, 
+        data: { 
+            username: 'hello', 
+            password: 'nice' 
+        } 
+    }
 
+    console.log(validationResult2)
+    // Result
+    {
+      error: true,
+      errors: [
+        'Expected (string) for (username) instead got (number)',
+        'Expected (string) for (password) instead got (object)'
+      ]
+    }
 ```
+
+
+
+### Type Validation + Transformation

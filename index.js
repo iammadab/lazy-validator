@@ -72,7 +72,7 @@ module.exports = { createValidator }
 
 const userLoginValidator = createValidator("username.string, password.string")
 const validLoginObject = { username: "hello", password: "nice" }
-const invalidLoginObject = { username: 1, password: 1 }
+const invalidLoginObject = { username: 1, password: {} }
 
 const validationResult1 = userLoginValidator.parse(validLoginObject)
 const validationResult2 = userLoginValidator.parse(invalidLoginObject)
