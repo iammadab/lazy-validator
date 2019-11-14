@@ -38,7 +38,7 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 		if(transformFunction.error)
 			return resultObj[currentProperty] = transformFunction
 
-		let transformationResult = transformFunction(currentProperty, currentValue)
+		let transformationResult = transformFunction(currentValue, currentProperty)
 
 		if(transformationResult.error)
 			return resultObj[currentProperty] = transformationResult
@@ -60,11 +60,11 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 
 
 
-// let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
-// myVal.add("lowercase", function(name, value){
-// 	return { error: false, data: value.toLowerCase() }
-// })
-// myVal.add("addSome", function(name, value){
-// 	return { error: false, data: value += "blahBLAH" }
-// })
-// console.log(myVal.parse({username: "Wisdom", password: "NicEstuff"}))
+let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
+myVal.add("lowercase", function(value){
+	return { error: false, data: value.toLowerCase() }
+})
+myVal.add("addSome", function(value){
+	return { error: false, data: value += "blahBLAH" }
+})
+console.log(myVal.parse({username: "Wisdom", password: "NicEstuff"}))
