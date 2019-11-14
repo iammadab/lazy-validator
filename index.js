@@ -1,5 +1,5 @@
-const { parseInput } = require("./util")
-const createResolver = require("./baseFunctions")
+const { parseInput } = require("./lib/util")
+const createResolver = require("./lib/baseFunctions")
 
 function createValidator(validationString){
 	let instructionObj = parseInput(validationString)
