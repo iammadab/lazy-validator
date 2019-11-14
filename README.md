@@ -1,4 +1,4 @@
-#Lazy Validator
+# Lazy Validator
 Validate your javascript object, and transform their values.
 Sometimes, you don't just want to validate an object, but you want to transform the object values in some way e.g to uppercase, lower case, remove all r's e.t.c before working with it.
 
@@ -32,5 +32,5 @@ Sometimes, you don't just want to validate an object, but you want to transform 
     const validationResult2 = userLoginValidator.parse(invalidLoginObject)
 
     console.log(validationResult1)
-    
+
 ```
