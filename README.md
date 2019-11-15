@@ -69,8 +69,31 @@ Sometimes, you don't just want to validate an object, but you want to transform 
     userLoginValidator.add("lowercase", value => value.toLowerCase())
 ```
 
-#### Get your object
+#### Get your object(s)
 ```javascript
     const validLoginObject = { username: "UsErOne", passsword: "nice" }
     const invalidLoginObject = { username: 1, password: {} }
+```
+
+#### Apply the validator
+```javascript
+    const validationResult1 = userLoginValidator.parse(validLoginObject)
+    const validationResult2 = userLoginValidator.parse(invalidLoginObject)
+
+    console.log(validationResult1)
+    // Result
+    { 
+        error: false, 
+        data: { username: 'userone', password: 'nice' } 
+    }
+
+    console.log(validationResult2)
+    // Result
+    {
+      error: true,
+      errors: [
+        'Expected (string) for (username) instead got (number)',
+        'Expected property called (password)'
+      ]
+    }
 ```

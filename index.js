@@ -39,17 +39,19 @@ function applyTransformations(transforms, currentProperty, currentValue, resolve
 			return resultObj[currentProperty] = transformFunction
 
 		let transformationResult = transformFunction(currentValue, currentProperty)
+		// console.log(transformationResult)
+		// console.log("Me")
 
 		if(transformationResult.error)
 			return resultObj[currentProperty] = transformationResult
 
-		currentValue = transformationResult
+		currentValue = transformationResult.data
 	}
 	resultObj[currentProperty] = currentValue
 }
 
 function formatResult(parseResult){
-	console.log(parseResult)
+	// console.log(parseResult)
 	let errors = [], props = Object.keys(parseResult)
 	props.forEach(prop => {
 		if(parseResult[prop].error)
@@ -72,10 +74,12 @@ module.exports = { createValidator }
 
 
 const userLoginValidator = createValidator("username.string.lowercase, password.string")
-const validLoginObject = { username: "hello", password: "nice" }
+const validLoginObject = { username: "UsErOne", password: "nice" }
 const invalidLoginObject = { username: 1 }
 
-userLoginValidator.add("lowercase", val => val.toLowerCase())
+userLoginValidator.add("lowercase", function(val){
+	return { data: val.toLowerCase() }
+})
 
 const validationResult1 = userLoginValidator.parse(validLoginObject)
 const validationResult2 = userLoginValidator.parse(invalidLoginObject)
