@@ -104,3 +104,7 @@ Sometimes, you don't just want to validate an object, but you want to transform 
       ]
     }
 ```
+
+
+### Author
+[Wisdom Ogwu (iammadab)](https://twitter.com/iammadab)
