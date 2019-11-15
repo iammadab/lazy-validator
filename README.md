@@ -47,7 +47,7 @@ Sometimes, you don't just want to validate an object, but you want to transform 
       error: true,
       errors: [
         'Expected (string) for (username) instead got (number)',
-        'Expected (string) for (password) instead got (object)'
+        'Expected property called (password)'
       ]
     }
 ```
