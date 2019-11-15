@@ -73,19 +73,15 @@ module.exports = { createValidator }
 
 
 
-const userLoginValidator = createValidator("username.string.lowercase, password.string")
+const userLoginValidator = createValidator("username.string.lowercase, password.string.uppercase")
 const validLoginObject = { username: "UsErOne", password: "nice" }
-const invalidLoginObject = { username: 1 }
-
-userLoginValidator.add("lowercase", value => {
-   return { error: false, data: value.toLowerCase() }
-})
+// const invalidLoginObject = { username: 1 }
 
 const validationResult1 = userLoginValidator.parse(validLoginObject)
-const validationResult2 = userLoginValidator.parse(invalidLoginObject)
+// const validationResult2 = userLoginValidator.parse(invalidLoginObject)
 
 console.log(validationResult1)
-console.log(validationResult2)
+// console.log(validationResult2)
 // let myVal = createValidator("username.string.lowercase, password.string.addSome.lowercase")
 // myVal.add("lowercase", function(value){
 // 	return { error: false, data: value.toLowerCase() }
