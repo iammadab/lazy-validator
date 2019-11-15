@@ -69,3 +69,8 @@ Sometimes, you don't just want to validate an object, but you want to transform 
     userLoginValidator.add("lowercase", value => value.toLowerCase())
 ```
 
+#### Get your object
+```javascript
+    const validLoginObject = { username: "UsErOne", passsword: "nice" }
+    const invalidLoginObject = { username: 1, password: {} }
+```
