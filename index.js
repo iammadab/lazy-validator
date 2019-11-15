@@ -77,8 +77,8 @@ const userLoginValidator = createValidator("username.string.lowercase, password.
 const validLoginObject = { username: "UsErOne", password: "nice" }
 const invalidLoginObject = { username: 1 }
 
-userLoginValidator.add("lowercase", function(val){
-	return { data: val.toLowerCase() }
+userLoginValidator.add("lowercase", value => {
+   return { error: false, data: value.toLowerCase() }
 })
 
 const validationResult1 = userLoginValidator.parse(validLoginObject)

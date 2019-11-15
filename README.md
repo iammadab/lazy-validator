@@ -66,7 +66,14 @@ Sometimes, you don't just want to validate an object, but you want to transform 
 #### Note: In the future, predefined transformation for common usecases will be available
 
 ``` javascript
-    userLoginValidator.add("lowercase", value => value.toLowerCase())
+    // Your transformation function should return an object, the object could be in two forms
+    // When there is an error during transformation
+    // { error: true, error_string: "description of error" }
+    // When everything went right
+    // { error: false, data: transformedData }
+    userLoginValidator.add("lowercase", value => {
+       return { error: false, data: value.toLowerCase() }
+    })
 ```
 
 #### Get your object(s)
