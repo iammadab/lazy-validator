@@ -14,7 +14,7 @@ function createValidator(validationString){
 }
 
 function createParser(instructionObj, resolver){
-	return function parse(objToValidate){
+	return function parse(objToValidate = {}){
 		let instructionProps = Object.keys(instructionObj), parserResult = {}
 
 		instructionProps.forEach(currentProperty => {
